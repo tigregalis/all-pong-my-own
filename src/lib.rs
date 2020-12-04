@@ -9,5 +9,5 @@ pub fn random_polar(min_radius: f32, max_radius: f32, min_angle: f32, max_angle:
     let angle = min_angle + random::<f32>() * (max_angle - min_angle);
     let angle = angle * TWO_PI;
     let radius = min_radius + random::<f32>() * (max_radius - min_radius);
-    dbg!(Vec3::new(radius * angle.cos(), radius * angle.sin(), 0.0))
+    Vec3::new(radius * angle.cos(), radius * angle.sin(), 0.0)
 }

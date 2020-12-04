@@ -308,7 +308,6 @@ fn handle_score_event(
         return;
     }
     for event in event_reader.iter(&events) {
-        println!("received score event: {}", event.0);
         scoreboard.score += event.0;
         for mut text in text_query.iter_mut() {
             text.value = format!("Score: {}", scoreboard.score);
@@ -351,13 +350,6 @@ fn handle_game_over_event(
         return;
     }
     for event in event_reader.iter(&events) {
-        println!(
-            "received game over event: {}",
-            match event {
-                GameOverEvent::Win => "Win",
-                GameOverEvent::Lose => "Lose",
-            }
-        );
         for mut text in query.iter_mut() {
             text.value = match event {
                 GameOverEvent::Win => "YOU WIN!".into(),
@@ -398,7 +390,7 @@ fn animate_won_message(
         *prog -= DURATION;
     }
     let prog = *prog / DURATION;
-    for (mut text, mut style) in query.iter_mut() {
+    for (mut text, mut _style) in query.iter_mut() {
         if (0.0..0.5).contains(&prog) {
             text.style.color = Color::rgb(0.1 + 0.5 * (0.5 - prog), 0.1 + 0.5 * (0.5 - prog), 1.0);
             text.style.font_size = 40.0 + 40.0 * (prog - 0.5);
@@ -424,7 +416,7 @@ fn animate_lost_message(
         *prog -= DURATION;
     }
     let prog = *prog / DURATION;
-    for (mut text, mut style) in query.iter_mut() {
+    for (mut text, mut _style) in query.iter_mut() {
         if (0.0..0.5).contains(&prog) {
             text.style.color = Color::rgb(1.0, 0.1 + 0.5 * (0.5 - prog), 0.1 + 0.5 * (0.5 - prog));
             text.style.font_size = 40.0 + 40.0 * (prog - 0.5);
